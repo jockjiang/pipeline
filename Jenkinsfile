@@ -25,6 +25,12 @@ pipeline {
       }
     }
 
+    stage('deploy') {
+      steps {
+        input 'Deploy?'
+      }
+    }
+
   }
   environment {
     env = 'bts'
