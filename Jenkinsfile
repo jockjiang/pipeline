@@ -31,6 +31,12 @@ pipeline {
       }
     }
 
+    stage('postdeploy') {
+      steps {
+        timeout(time: 4)
+      }
+    }
+
   }
   environment {
     env = 'bts'
