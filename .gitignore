@@ -7,6 +7,8 @@
 !/jobs
 !/.gitignore
 !/*.xml
+!/logstash
+!/filebeat
 
 #ignore all files in jobs subdirectories except for folders
 #note: git doesn't track folders, only file content
