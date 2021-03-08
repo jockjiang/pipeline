@@ -25,11 +25,6 @@ pipeline {
       }
     }
 
-    stage('deploy') {
-      steps {
-        input 'Deploy?'
-      }
-    }
 
   }
   environment {
