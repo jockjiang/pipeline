@@ -6,13 +6,14 @@ pipeline {
     stage('checkout beats') {
       steps {
         git branch: '7.11', credentialsId: '465cc7bc-0bd5-4a56-92da-ff33fdd2952c', url: 'https://github.com/jockjiang/beats.git'
+        dir('filebeat') {
+          sh '/home/wbxbuilds/gopath/bin/mage build'
       }
     }
 
     stage('Build filebeat') {
       steps {
-        dir('filebeat') {
-          sh '/home/wbxbuilds/gopath/bin/mage build'
+          echo 'hello'
         }
       }
     }
