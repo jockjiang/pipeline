@@ -1,33 +1,18 @@
 pipeline {
-  agent any
+  agent {
+    label 'esbtpt1ecd403'
+  }
   stages {
-    stage('Stage1') {
-      parallel {
-        stage('Stage1') {
-          steps {
-            echo 'Hello $BUILD_NUMBER'
-            sh 'echo "this is ${BUILD_NUMBER}"'
-          }
-        }
-
-        stage('Stage1.1') {
-          steps {
-            sh 'echo "this is stage1.1"'
-          }
-        }
-
-      }
-    }
-
-    stage('stage2') {
+    stage('checkout wappii') {
       steps {
-        sh 'echo "environment: ${env}"'
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/logstash-filter-wappii.git']]])
+        }
+      }
+      stage('build plugin'){
+        steps {
+          sh '''
+                ./gradlew gem'''
+        }
       }
     }
-
-
-  }
-  environment {
-    env = 'bts'
-  }
 }
