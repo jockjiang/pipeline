@@ -11,8 +11,9 @@ pipeline {
 
     stage('Build filebeat') {
       steps {
-        cd beats/filebeat
-        sh 'mage build'
+        dir('filebeat') {
+          sh '/home/wbxbuilds/gopath/bin/mage build'
+        }
       }
     }
 
