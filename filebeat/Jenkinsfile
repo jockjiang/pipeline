@@ -1,38 +1,20 @@
 pipeline {
-  agent any
-  stages {
-    stage('Stage1') {
-      parallel {
-        stage('Stage1') {
-          steps {
-            echo 'Hello $BUILD_NUMBER'
-            sh 'echo "this is ${BUILD_NUMBER}"'
-          }
-        }
-
-        stage('Stage1.1') {
-          steps {
-            sh 'echo "this is stage1.1"'
-          }
-        }
-
-      }
-    }
-
-    stage('stage2') {
-      steps {
-        sh 'echo "environment: ${env}"'
-      }
-    }
-
-    stage('stage3') {
-      steps {
-        sh 'echo hello'
-      }
-    }
-
+  agent {
+    label 'esbtpt1ecd403'
   }
-  environment {
-    env = 'bts'
+  stages {
+    stage('checkout beats') {
+      steps {
+        git branch: '7.11', credentialsId: '465cc7bc-0bd5-4a56-92da-ff33fdd2952c', url: 'https://github.com/jockjiang/beats.git'
+      }
+    }
+
+    stage('Build filebeat') {
+      steps {
+        cd beats/filebeat
+        sh 'mage build'
+      }
+    }
+
   }
 }
