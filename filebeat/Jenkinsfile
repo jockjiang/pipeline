@@ -18,20 +18,28 @@ pipeline {
 
               cd filebeat
               mage build
-              cd ../.. '''
-        echo env.WORKSPACE
+              mkdir -p /tmp/jenkins/filebeat
+              cp filebeat /tmp/jenkins/filebeat'''
       }
     }
     stage('checkout webex filebeat modules'){
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/filebeat-modules.git']]])
-        echo env.WORKSPACE
+        sh ''' mkdir -p /tmp/jenkins/filebeat_modules
+               cp -R * /tmp/jenkins/filebeat_modules
+        '''
       }
     }
     stage('checkout filebeat package'){
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/filebeat.git']]])
-        echo env.WORKSPACE
+        checkout([$class: 'GitSCM', branches: [[name: 'refs/tags/v7.11.2-12']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/filebeat.git']]])
+        sh ''' cp -f /tmp/jenkins/filebeat/filebeat usr/bin/filebeat
+               cp -f /tmp/jenkins/filebeat/filebeat usr/share/filebeat/bin/filebeat
+               cp -f -R /tmp/jenkins/filebeat_modules/* usr/share/filebeat/webex_module
+               export VERSION=7.11.2
+               export BUILD_NUMBER=12
+               ./build-rpm.sh
+        '''
       }
     }
   }
