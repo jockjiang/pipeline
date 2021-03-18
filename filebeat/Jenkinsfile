@@ -43,6 +43,7 @@ pipeline {
                export BUILD_NUMBER=12
                ./build-rpm.sh
                rm -fr /tmp/jenkins
+               rm -fr ./usr/share/filebeat/webex_module/*
         '''
       }
     }
