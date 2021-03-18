@@ -3,22 +3,36 @@ pipeline {
     label 'esbtpt1ecd403'
   }
   stages {
-    stage('checkout beats') {
+    stage('checkout beats source code') {
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '*/7.11']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '465cc7bc-0bd5-4a56-92da-ff33fdd2952c', url: 'https://github.com/jockjiang/beats.git']]])
         }
       }
-      stage('build filebeat'){
-        steps {
-          sh '''export GOROOT=/home/wbxbuilds/go1.15.8
-                export PATH=$PATH:$GOROOT/bin
-                export GOPATH=/home/wbxbuilds/gopath
-                export PATH=$PATH:$GOPATH/bin
-                export GOPRIVATE="github.com/jockjiang,sqbu-github.cisco.com/SAP,sqbu-github.cisco.com/WAP-DPI"
+    stage('build filebeat'){
+      steps {
+        sh '''export GOROOT=/home/wbxbuilds/go1.15.8
+              export PATH=$PATH:$GOROOT/bin
+              export GOPATH=/home/wbxbuilds/gopath
+              export PATH=$PATH:$GOPATH/bin
+              export GOPRIVATE="github.com/jockjiang,sqbu-github.cisco.com/SAP,sqbu-github.cisco.com/WAP-DPI"
 
-                cd filebeat
-                mage build'''
-        }
+              cd filebeat
+              mage build
+              cd ../.. '''
+        echo env.WORKSPACE
       }
     }
+    stage('checkout webex filebeat modules'){
+      steps {
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/filebeat-modules.git']]])
+        echo env.WORKSPACE
+      }
+    }
+    stage('checkout filebeat package'){
+      steps {
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/filebeat.git']]])
+        echo env.WORKSPACE
+      }
+    }
+  }
 }

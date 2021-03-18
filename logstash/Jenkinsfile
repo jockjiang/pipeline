@@ -11,7 +11,7 @@ pipeline {
       stage('build plugin'){
         steps {
           sh '''
-                echo "LOGSTASH_CORE_PATH=/home/wbxbuilds/logstash/logstash-core" >> gradle.properties
+                echo "LOGSTASH_CORE_PATH=/home/wbxbuilds/logstash/logstash-core" > gradle.properties
                 ./gradlew gem'''
         }
       }
