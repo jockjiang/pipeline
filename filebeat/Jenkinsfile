@@ -34,13 +34,13 @@ pipeline {
     }
     stage('checkout filebeat package'){
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: 'refs/tags/v7.11.2-14']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/filebeat.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: 'refs/tags/v7.11.2-15']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/filebeat.git']]])
         sh ''' cp -f /tmp/jenkins/filebeat/filebeat ./usr/bin
                cp -f /tmp/jenkins/filebeat/filebeat ./usr/share/filebeat/bin
                cp -f -R /tmp/jenkins/filebeat_modules/* ./usr/share/filebeat/webex_module
                rm -fr ./filebeat
                export VERSION=7.11.2
-               export BUILD_NUMBER=14
+               export BUILD_NUMBER=15
                ./build-rpm.sh
                rm -fr /tmp/jenkins
                rm -fr ./*
