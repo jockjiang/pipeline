@@ -15,7 +15,8 @@ pipeline {
               export GOPATH=/data/gopath
               export PATH=$PATH:$GOPATH/bin
               export GOPRIVATE="github.com/jockjiang,sqbu-github.cisco.com/SAP,sqbu-github.cisco.com/WAP-DPI"
-
+              go mod download sqbu-github.cisco.com/SAP/kmsgowrapper
+              go mod download sqbu-github.cisco.com/WAP-DPI/webexpii
               cd filebeat
               mage build
               mkdir -p /tmp/jenkins/filebeat
