@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label 'esbtpt1ecd403'
+    label 'esbtpt1ecd001'
   }
   stages {
     stage('checkout beats source code') {
