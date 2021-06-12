@@ -10,9 +10,9 @@ pipeline {
       }
     stage('build filebeat'){
       steps {
-        sh '''export GOROOT=/home/wbxbuilds/go1.15.8
+        sh '''export GOROOT=/data/go1.15.8
               export PATH=$PATH:$GOROOT/bin
-              export GOPATH=/home/wbxbuilds/gopath
+              export GOPATH=/data/gopath
               export PATH=$PATH:$GOPATH/bin
               export GOPRIVATE="github.com/jockjiang,sqbu-github.cisco.com/SAP,sqbu-github.cisco.com/WAP-DPI"
 
