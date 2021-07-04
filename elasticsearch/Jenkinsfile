@@ -21,31 +21,9 @@ pipeline {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/elasticsearch.git']]])
         sh """export VERSION=7.10.2
               export BUILD_NUMBER=2
-              export build_path=build/distribution/local/elasticsearch-7.10.2-SNAPSHOT/
+              export build_path=build/distribution/local/elasticsearch-${VERSION}-SNAPSHOT/
               export dest_path=usr/share/elasticsearch/
-              rm -fr buildSrc
-              rm -fr client
-              rm -fr distribution
-              rm -fr libs
-              rm -fr modules
-              rm -fr plugins
-              rm -fr server
-              rm -fr test
-              rm -fr x-pack
-              rm -f var/lib/elasticsearch/placeholder
-              rm -f var/log/elasticsearch/placeholder
-              \cp -f ${build_path}bin/elasticsearch-sql-cli-7.10.2-SNAPSHOT.jar ${dest_path}bin/elasticsearch-sql-cli-7.10.2.jar
-              \cp -f ${build_path}lib/elasticsearch-7.10.2-SNAPSHOT.jar ${dest_path}/lib/elasticsearch-7.10.2.jar
-              \cp -f ${build_path}lib/elasticsearch-cli-7.10.2-SNAPSHOT.jar ${dest_path}/lib/elasticsearch-cli-7.10.2.jar
-              \cp -f ${build_path}lib/elasticsearch-core-7.10.2-SNAPSHOT.jar ${dest_path}/lib/elasticsearch-core-7.10.2.jar
-              \cp -f ${build_path}lib/elasticsearch-geo-7.10.2-SNAPSHOT.jar ${dest_path}/lib/elasticsearch-geo-7.10.2.jar
-              \cp -f ${build_path}lib/elasticsearch-launchers-7.10.2-SNAPSHOT.jar ${dest_path}/lib/elasticsearch-launchers-7.10.2.jar
-              \cp -f ${build_path}lib/elasticsearch-plugin-classloader-7.10.2-SNAPSHOT.jar ${dest_path}/lib/elasticsearch-plugin-classloader-7.10.2.jar
-              \cp -f ${build_path}lib/elasticsearch-secure-sm-7.10.2-SNAPSHOT.jar ${dest_path}/lib/elasticsearch-secure-sm-7.10.2.jar 
-              \cp -f ${build_path}lib/elasticsearch-x-content-7.10.2-SNAPSHOT.jar ${dest_path}/lib/elasticsearch-x-content-7.10.2.jar
-              \cp -f ${build_path}lib/java-version-checker-7.10.2-SNAPSHOT.jar ${dest_path}/lib/java-version-checker-7.10.2.jar
-              rm -fr build
-               ./build-rpm.sh
+              ./build-rpm.sh
         """
       }
     }
