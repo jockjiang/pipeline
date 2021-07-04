@@ -5,7 +5,7 @@ pipeline {
   stages {
     stage('checkout elasticsearch source code') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/7.10']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '465cc7bc-0bd5-4a56-92da-ff33fdd2952c', url: 'https://github.com/jockjiang/elasticsearch.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: 'refs/tags/v7.10.2']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '465cc7bc-0bd5-4a56-92da-ff33fdd2952c', url: 'https://github.com/jockjiang/elasticsearch.git']]])
         }
       }
     stage('build elasticsearch'){
