@@ -1,0 +1,30 @@
+pipeline {
+  agent {
+    label 'esbtpt1ecd003'
+  }
+  stages {
+    stage('checkout elasticsearch source code') {
+      steps {
+        checkout([$class: 'GitSCM', branches: [[name: '*/7.10']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '465cc7bc-0bd5-4a56-92da-ff33fdd2952c', url: 'https://github.com/jockjiang/elasticsearch.git']]])
+        }
+      }
+    stage('build elasticsearch'){
+      steps {
+        sh '''export JAVA_HOME=/usr/share/elasticsearch/jdk
+              ./gradlew localDistro
+        '''
+      }
+    }
+    
+    // stage('checkout elasticsearch package'){
+    //   steps {
+    //     checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/elasticsearch.git']]])
+    //     sh ''' export VERSION=7.10.2
+    //            export BUILD_NUMBER=2
+    //            ./build-rpm.sh
+    //     '''
+    //   }
+    // }
+    
+  }
+}
