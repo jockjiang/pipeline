@@ -16,15 +16,15 @@ pipeline {
       }
     }
     
-    // stage('checkout elasticsearch package'){
-    //   steps {
-    //     checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/elasticsearch.git']]])
-    //     sh ''' export VERSION=7.10.2
-    //            export BUILD_NUMBER=2
-    //            ./build-rpm.sh
-    //     '''
-    //   }
-    // }
+    stage('checkout elasticsearch package'){
+      steps {
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jockj_sqbu-github', url: 'https://sqbu-github.cisco.com/WAP-DPI/elasticsearch.git']]])
+        sh ''' export VERSION=7.10.2
+               export BUILD_NUMBER=2
+               ./build-rpm.sh
+        '''
+      }
+    }
     
   }
 }
